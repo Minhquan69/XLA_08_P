@@ -56,8 +56,8 @@ def load_gray(path):
         gray = gray.astype(np.float32) / 255.0
     return gray
 
-noisy_img = load_gray(r'D:\XuLyAnh\HM\t\nhieu_manh.png')
-clean_img = load_gray(r'D:\XuLyAnh\HM\t\bieu-cam-cuoi-tu-nhien-khi-chup-anh-768x457.webp')
+noisy_img = load_gray(r't\nhieu_manh.png')
+clean_img = load_gray(r't\bieu-cam-cuoi-tu-nhien-khi-chup-anh-768x457.webp')
 
 if noisy_img.shape != clean_img.shape:
     h_diff = noisy_img.shape[0] - clean_img.shape[0]

@@ -43,17 +43,15 @@ def freq_filter(img, H):
     return np.clip(out, 0, 1)
 
 
-# ====== Load ảnh gốc và nhiễu ======
-img_noisy = cv2.imread(r"D:\XuLyAnh\HM\t\nhieu_manh.png", cv2.IMREAD_GRAYSCALE).astype(np.float32)/255.0
-img_ref   = cv2.imread(r"D:\XuLyAnh\HM\bieu-cam-cuoi-tu-nhien-khi-chup-anh-768x457.webp", cv2.IMREAD_GRAYSCALE).astype(np.float32)/255.0
+img_noisy = cv2.imread(r"t\nhieu_manh.png", cv2.IMREAD_GRAYSCALE).astype(np.float32)/255.0
+img_ref   = cv2.imread(r"t\bieu-cam-cuoi-tu-nhien-khi-chup-anh-768x457.webp", cv2.IMREAD_GRAYSCALE).astype(np.float32)/255.0
 
 img_ref = cv2.resize(img_ref, (img_noisy.shape[1], img_noisy.shape[0]))
 
 # ====== Chọn D0 ======
-D0 = 45   # hoặc bạn chọn giá trị nào bạn thấy tối ưu
+D0 = 40  
 
 
-# ====== Lọc ảnh ======
 out_ideal_lp = freq_filter(img_noisy, H_ideal_lp(img_noisy.shape, D0))
 out_gauss_lp = freq_filter(img_noisy, H_gauss_lp(img_noisy.shape, D0))
 out_butt2_lp = freq_filter(img_noisy, H_butter_lp(img_noisy.shape, D0, n=2))
@@ -65,7 +63,6 @@ out_butt2_hp = freq_filter(img_noisy, H_butter_hp(img_noisy.shape, D0, n=2))
 out_butt4_hp = freq_filter(img_noisy, H_butter_hp(img_noisy.shape, D0, n=4))
 
 
-# ====== In PSNR + SSIM ======
 print("\n--- LOW PASS FILTERS ---")
 print("Ideal LPF:     ", psnr(img_ref, out_ideal_lp), ssim(img_ref, out_ideal_lp, data_range=1.0))
 print("Gaussian LPF:  ", psnr(img_ref, out_gauss_lp), ssim(img_ref, out_gauss_lp, data_range=1.0))
@@ -79,7 +76,6 @@ print("Butter HPF n=2:", psnr(img_ref, out_butt2_hp), ssim(img_ref, out_butt2_hp
 print("Butter HPF n=4:", psnr(img_ref, out_butt4_hp), ssim(img_ref, out_butt4_hp, data_range=1.0))
 
 
-# ====== HIỂN THỊ TẤT CẢ 10 ẢNH ======
 plt.figure(figsize=(14, 10))
 
 titles = [
@@ -107,3 +103,5 @@ for i, (im, t) in enumerate(zip(imgs, titles), 1):
 
 plt.tight_layout()
 plt.show()
+
+

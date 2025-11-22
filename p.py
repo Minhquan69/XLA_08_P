@@ -42,8 +42,8 @@ def freq_filter(img, H):
     out = np.real(ifft2(ifftshift(G)))
     return np.clip(out, 0, 1)
 
-img_noisy = cv2.imread(r"D:\XuLyAnh\HM\t\nhieu_manh.png", cv2.IMREAD_GRAYSCALE).astype(np.float32)/255.0
-img_ref   = cv2.imread(r"D:\XuLyAnh\HM\t\bieu-cam-cuoi-tu-nhien-khi-chup-anh-768x457.webp", cv2.IMREAD_GRAYSCALE).astype(np.float32)/255.0
+img_noisy = cv2.imread(r"t\nhieu_manh.png", cv2.IMREAD_GRAYSCALE).astype(np.float32)/255.0
+img_ref   = cv2.imread(r"t\bieu-cam-cuoi-tu-nhien-khi-chup-anh-768x457.webp", cv2.IMREAD_GRAYSCALE).astype(np.float32)/255.0
 img_ref = cv2.resize(img_ref, (img_noisy.shape[1], img_noisy.shape[0]))
 
 D0_values = [10, 20, 40, 60]
@@ -104,3 +104,14 @@ for D0 in D0_values:
 
     plt.tight_layout()
     plt.show()
+cv2.imwrite(os.path.join(save_dir, f"ideal_lpf_D0_{D0}.png"), (out_ideal_lp * 255).astype(np.uint8))
+cv2.imwrite(os.path.join(save_dir, f"gauss_lpf_D0_{D0}.png"), (out_gauss_lp * 255).astype(np.uint8))
+cv2.imwrite(os.path.join(save_dir, f"butter2_lpf_D0_{D0}.png"), (out_butt2_lp * 255).astype(np.uint8))
+cv2.imwrite(os.path.join(save_dir, f"butter4_lpf_D0_{D0}.png"), (out_butt4_lp * 255).astype(np.uint8))
+
+cv2.imwrite(os.path.join(save_dir, f"ideal_hpf_D0_{D0}.png"), (out_ideal_hp * 255).astype(np.uint8))
+cv2.imwrite(os.path.join(save_dir, f"gauss_hpf_D0_{D0}.png"), (out_gauss_hp * 255).astype(np.uint8))
+cv2.imwrite(os.path.join(save_dir, f"butter2_hpf_D0_{D0}.png"), (out_butt2_hp * 255).astype(np.uint8))
+cv2.imwrite(os.path.join(save_dir, f"butter4_hpf_D0_{D0}.png"), (out_butt4_hp * 255).astype(np.uint8))
+
+print(f">>> Đã lưu ảnh kết quả cho D0 = {D0} vào thư mục /{save_dir}")
